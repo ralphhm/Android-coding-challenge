@@ -8,9 +8,11 @@ import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindToLifecycle
 import de.rhm.cityweather.service.model.Weather
 import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_weather.*
+import org.koin.android.ext.android.inject
+
 class WeatherActivity : AppCompatActivity() {
 
-    private val repository = WeatherRepository()
+    private val repository: WeatherRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
