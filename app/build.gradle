@@ -41,6 +41,7 @@ dependencies {
 
     //Koin
     implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-android-architecture:$koin_version"
     testImplementation "org.koin:koin-test:$koin_version"
 
     testImplementation 'junit:junit:4.12'

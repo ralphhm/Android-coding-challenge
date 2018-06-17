@@ -53,7 +53,7 @@ class ActionToStateTest {
 
     @Test
     fun emitsResultState_afterSuccess() {
-        whenever(call.invoke(any())).thenReturn(Single.just(Weather("", Weather.Main("", "", ""))))
+        whenever(call.invoke(any())).thenReturn(Single.just(mock()))
         action.onNext("")
         observer.values().run {
             assert(first() is WeatherUiState.Loading)

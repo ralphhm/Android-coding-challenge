@@ -1,5 +1,6 @@
 package de.rhm.cityweather
 
+import android.arch.lifecycle.ViewModel
 import de.rhm.cityweather.service.model.Weather
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
@@ -8,12 +9,14 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 
-class WeatherViewModel(weatherRepository: WeatherRepository) {
+class WeatherViewModel(weatherRepository: WeatherRepository): ViewModel() {
 
     val fetchWeather = PublishSubject.create<String>()
     val uiState: Observable<out WeatherUiState> = fetchWeather
             .compose(ActionToState {weatherRepository.getWeather(it)})
             .startWith(WeatherUiState.Initial)
+            .replay(1)
+            .autoConnect(0)
             .observeOn(AndroidSchedulers.mainThread())
 
 }

@@ -7,11 +7,11 @@ import com.trello.rxlifecycle2.android.lifecycle.kotlin.bindToLifecycle
 import de.rhm.cityweather.WeatherUiState.*
 import kotlinx.android.synthetic.main.activity_weather.*
 import kotlinx.android.synthetic.main.fragment_weather.*
-import org.koin.android.ext.android.inject
+import org.koin.android.architecture.ext.viewModel
 
 class WeatherActivity : AppCompatActivity() {
 
-    private val viewModel: WeatherViewModel by inject()
+    private val viewModel by viewModel<WeatherViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
