@@ -5,5 +5,5 @@
     <string name="welcome">Welcome to City Weather, please provide a city in the search field!</string>
     <string name="loading_city_weather">Loading weather for \"%s\"</string>
     <string name="temperature">%s °C</string>
-    <string name="error_loading_weather">There was an error loading the weather for \"%1\"</string>
+    <string name="error_loading_weather">There was an error loading the weather for \"%s\"</string>
 </resources>
