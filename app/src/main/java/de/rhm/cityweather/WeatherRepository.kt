@@ -7,6 +7,6 @@ import java.util.concurrent.TimeUnit
 
 class WeatherRepository {
 
-    fun getWeather(city: String): Single<Weather> = Single.just(Weather(city, Weather.Main("Temp", "minTemp", "maxTemp"))).delay(3, TimeUnit.SECONDS).subscribeOn(Schedulers.io())
+    fun getWeather(city: String): Single<Weather> = Single.just(Weather(city, Weather.Main("26.1", "minTemp", "maxTemp"))).delay(3, TimeUnit.SECONDS).subscribeOn(Schedulers.io())
 
 }

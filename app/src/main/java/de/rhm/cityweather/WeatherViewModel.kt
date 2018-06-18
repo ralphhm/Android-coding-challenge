@@ -23,23 +23,23 @@ class WeatherViewModel(weatherRepository: WeatherRepository): ViewModel() {
 
 sealed class WeatherUiState {
     object Initial: WeatherUiState()
-    object Loading: WeatherUiState()
+    class Loading(val cityName: String): WeatherUiState()
     class Result(val weather: Weather): WeatherUiState()
-    object Failure: WeatherUiState()
+    class Failure(val cityName: String): WeatherUiState()
 }
 
 class ActionToState(private inline val call: (String) -> Single<Weather>) : ObservableTransformer<String, WeatherUiState> {
 
     override fun apply(upstream: Observable<String>): ObservableSource<WeatherUiState> {
-        return upstream.switchMap { action ->
-            call.invoke(action)
+        return upstream.switchMap { cityName ->
+            call.invoke(cityName)
                     //map success case
                     .map<WeatherUiState> { WeatherUiState.Result(it) }
                     .toObservable()
                     //emit loading state while fetching
-                    .startWith(WeatherUiState.Loading)
-                    //emit failure state if fetch failed providing an action that triggers another fetch
-                    .onErrorReturn { WeatherUiState.Failure }
+                    .startWith(WeatherUiState.Loading(cityName))
+                    //emit failure state if fetch failed
+                    .onErrorReturn { WeatherUiState.Failure(cityName) }
         }
     }
 
