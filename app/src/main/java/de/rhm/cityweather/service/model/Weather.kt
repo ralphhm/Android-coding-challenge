@@ -1,5 +1,9 @@
 package de.rhm.cityweather.service.model
 
-data class Weather(val name: String, val details: Main) {
-    data class Main(val temp: String, val minTemp: String, val maxTemp: String)
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
+data class Weather(@Json(name = "name") val name: String, @Json(name = "main") val details: Main) {
+    data class Main(@Json(name = "temp") val temp: String)
 }

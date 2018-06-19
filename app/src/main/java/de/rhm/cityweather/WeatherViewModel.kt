@@ -4,14 +4,10 @@ import android.arch.lifecycle.ViewModel
 import de.rhm.cityweather.service.model.Weather
 import de.rhm.cityweather.speech.Speech
 import de.rhm.cityweather.speech.SpeechState
-import io.reactivex.Observable
-import io.reactivex.ObservableSource
-import io.reactivex.ObservableTransformer
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.*
 import io.reactivex.subjects.PublishSubject
 
-class WeatherViewModel(weatherRepository: WeatherRepository, speech: Speech): ViewModel() {
+class WeatherViewModel(weatherRepository: WeatherRepository, speech: Speech, scheduler: Scheduler): ViewModel() {
 
     val fetchWeather = PublishSubject.create<String>()
     val uiState: Observable<out WeatherUiState> = fetchWeather
@@ -19,14 +15,14 @@ class WeatherViewModel(weatherRepository: WeatherRepository, speech: Speech): Vi
             .startWith(WeatherUiState.Initial)
             .replay(1)
             .autoConnect(0)
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(scheduler)
 
     val speak = PublishSubject.create<Any>()
     val speechState: Observable<out SpeechState> = speak
             .concatMap { speech.observable }
             .replay(1)
             .autoConnect(0)
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(scheduler)
 }
 
 sealed class WeatherUiState {

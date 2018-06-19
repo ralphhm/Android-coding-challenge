@@ -5,23 +5,12 @@ import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import de.rhm.cityweather.service.model.Weather
 import io.reactivex.Single
-import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.observers.TestObserver
-import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import org.junit.BeforeClass
 import org.junit.Test
 
 class ActionToStateTest {
-
-    companion object {
-        @BeforeClass
-        @JvmStatic
-        fun setupClass() {
-            RxAndroidPlugins.setInitMainThreadSchedulerHandler { _ -> Schedulers.trampoline() }
-        }
-    }
 
     val call = mock<(String) -> Single<Weather>>()
     val observer = TestObserver.create<WeatherUiState>()

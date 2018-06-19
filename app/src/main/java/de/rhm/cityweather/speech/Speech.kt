@@ -7,10 +7,12 @@ import android.speech.RecognitionListener
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import io.reactivex.Observable
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class Speech(context: Context) {
+class Speech(private val speechRecognizer: SpeechRecognizer): KoinComponent {
 
-    private val speechRecognizer = SpeechRecognizer.createSpeechRecognizer(context)
+    private val context by inject<Context>()
 
     val observable: Observable<SpeechState> = Observable.create { emitter ->
         speechRecognizer.setRecognitionListener(object : RecognitionListener {

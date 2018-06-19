@@ -4,25 +4,15 @@ import com.nhaarman.mockito_kotlin.any
 import com.nhaarman.mockito_kotlin.mock
 import com.nhaarman.mockito_kotlin.whenever
 import io.reactivex.Single
-import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.observers.TestObserver
 import io.reactivex.schedulers.Schedulers
-import org.junit.BeforeClass
 import org.junit.Test
 
 class WeatherViewModelTest {
 
-    companion object {
-        @BeforeClass
-        @JvmStatic
-        fun setupClass() {
-            RxAndroidPlugins.setInitMainThreadSchedulerHandler { _ -> Schedulers.trampoline() }
-        }
-    }
-
     val observer = TestObserver<WeatherUiState>()
     val repository = mock<WeatherRepository>()
-    val viewModel = WeatherViewModel(repository)
+    val viewModel = WeatherViewModel(repository, mock(), Schedulers.trampoline())
 
     @Test
     fun subscribeAfterFetchWeather_emitsCachedState() {
