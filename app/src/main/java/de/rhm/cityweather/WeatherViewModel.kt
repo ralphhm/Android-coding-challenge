@@ -20,6 +20,9 @@ class WeatherViewModel(weatherRepository: WeatherRepository, speech: Speech, sch
     val speak = PublishSubject.create<Any>()
     val speechState: Observable<out SpeechState> = speak
             .concatMap { speech.observable }
+            .doOnNext {
+                (it as? SpeechState.Result)?.let { fetchWeather.onNext(it.text) }
+            }
             .replay(1)
             .autoConnect(0)
             .observeOn(scheduler)

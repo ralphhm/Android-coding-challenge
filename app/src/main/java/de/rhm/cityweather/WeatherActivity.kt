@@ -79,7 +79,6 @@ class WeatherActivity : AppCompatActivity() {
         }
         is SpeechState.Result -> {
             actionSpeak.setColorFilter(Color.WHITE)
-            search_view.setQuery(speechState.text, true)
         }
     }
 
